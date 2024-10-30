@@ -13,6 +13,7 @@ await plugin({
         filename: path,
         generate: 'ssr', // ssr
         hydratable: true,
+        css: 'injected',
       }).js.code;
 
       // and return the compiled source code as "js"

@@ -3,9 +3,15 @@
   import * as d3 from 'd3';
 
   const is_ssr = getContext('is_ssr');
-  export let data;
-  export let width = 500;
-  export let height = 500;
+  /**
+   * @typedef {Object} Props
+   * @property {any} data
+   * @property {number} [width]
+   * @property {number} [height]
+   */
+
+  /** @type {Props} */
+  let { data, width = 500, height = 500 } = $props();
 
   let min = d3.min(data, (d) => d.value);
   let max = d3.max(data, (d) => d.value);
@@ -29,10 +35,12 @@
   );
 
   // Specify initial tiling method.
-  let tile = d3.treemapSquarify;
+  let tile = $state(d3.treemapSquarify);
 
   // Compute the layout.
-  $: root = d3.treemap().tile(tile).size([width, height]).padding(1).round(true)(hierarchy);
+  let root = $derived(
+    d3.treemap().tile(tile).size([width, height]).padding(1).round(true)(hierarchy)
+  );
 
   const handleClick = (name, value) => alert(`you selected: ${name} (${value})`);
 </script>
@@ -70,8 +78,8 @@ min: {min} | max: {max} | total: {sum}
         height={leaf.y1 - leaf.y0} />
       <text
         y={cy}
-        on:click={(e) => handleClick(name, value)}
-        on:keyup={(e) => handleClick(name, value)}
+        onclick={(e) => handleClick(name, value)}
+        onkeyup={(e) => handleClick(name, value)}
         role="button"
         tabindex="0">
         <tspan x={cx}>{leaf.data.id}</tspan>

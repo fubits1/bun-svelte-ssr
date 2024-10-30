@@ -8,8 +8,8 @@
     "check": "bunx @biomejs/biome check ./src --apply"
   },
   "dependencies": {
-    "@biomejs/biome": "^1.6.3",
-    "bun": "^1.0.36",
+    "@biomejs/biome": "^1.9.4",
+    "bun": "^1.1.33",
     "d3": "^7.9.0",
     "svelte": "latest"
   },
@@ -18,6 +18,6 @@
     "@types/bun": "latest"
   },
   "peerDependencies": {
-    "typescript": "^5.0.0"
+    "typescript": "^5.4.3"
   }
 }

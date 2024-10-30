@@ -1,4 +1,5 @@
 import './bun/svelte-loader.js';
+import { render } from 'svelte/server';
 // import App from './lib/app.js';
 import App from './lib/App.svelte';
 
@@ -10,18 +11,20 @@ const server = Bun.serve({
     if (path === '/') {
       const searchParams = Object.fromEntries(url.searchParams);
       const { width = 600, height = 600 } = searchParams;
-      const { html, css } = App.render({ ssr: true, width: width, height: height });
+      const { body, head, css } = render(App, {
+        props: { ssr: true, width: width, height: height },
+      });
       const title = `Bun + Svelte (SSR)`;
       return new Response(
         `<html>
         <head>
+        ${head}
           <style>
             body, #graph {display: flex; flex-direction: column; justify-content: center; align-items: center;}
-            ${css.code}
           </style>
         </head>
         <body><h1>${title}</h1>
-        <div id="graph">${html}</div>
+        <div id="graph">${body}</div>
         </body>
       </html>`,
         {

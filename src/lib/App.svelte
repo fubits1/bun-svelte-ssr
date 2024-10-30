@@ -1,13 +1,26 @@
 <script>
+  import { run } from 'svelte/legacy';
+
   import { setContext } from 'svelte';
   import Treemap from './Treemap.svelte';
   import data from '../data/data.json';
-  $: data.forEach((d) => (d.id !== 'all' ? (d.parentId = 'all') : (d.parentId = null)));
-  export let ssr = false;
+  // run(() => {
+  data.forEach((d) => (d.id !== 'all' ? (d.parentId = 'all') : (d.parentId = null)));
+  // });
+  /**
+   * @typedef {Object} Props
+   * @property {boolean} [ssr]
+   * @property {number} [width]
+   * @property {number} [height]
+   */
+
+  /** @type {Props} */
+  let { ssr = false, width = 500, height = 500 } = $props();
+
   setContext('is_ssr', ssr);
-  export let width = 500;
-  export let height = 500;
-  let innerWidth, innerHeight;
+
+  let innerWidth = $state();
+  let innerHeight = $state();
 </script>
 
 <svelte:window bind:innerWidth bind:innerHeight />
