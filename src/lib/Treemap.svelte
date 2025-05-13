@@ -38,9 +38,16 @@
   let tile = $state(d3.treemapSquarify);
 
   // Compute the layout.
-  let root = $derived(
-    d3.treemap().tile(tile).size([width, height]).padding(1).round(true)(hierarchy)
-  );
+  let root = $derived.by(() => {
+    return structuredClone(
+      d3
+        .treemap()
+        .tile(tile)
+        .size([width, height])
+        .padding(1)
+        .round(true)(hierarchy)
+    );
+  });
 
   const handleClick = (name, value) => alert(`you selected: ${name} (${value})`);
 </script>
