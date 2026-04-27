@@ -1,3 +1,5 @@
+// also see https://github.com/buhrmi/bun-plugin-svelte
+
 import { plugin } from 'bun';
 
 await plugin({
