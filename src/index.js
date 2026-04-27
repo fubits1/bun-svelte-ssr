@@ -18,6 +18,11 @@ const server = Bun.serve({
       return new Response(
         `<html>
         <head>
+    <script type="module" src="/script"></script>
+    <script type="text/json" id="svelte-ssr">${JSON.stringify({
+      width: +width,
+      height: +height,
+    })}</script>
         ${head}
           <style>
             body, #graph {display: flex; flex-direction: column; justify-content: center; align-items: center;}
@@ -34,5 +39,15 @@ const server = Bun.serve({
         }
       );
     }
+    if (path === '/script') {
+      return new Response(Bun.file('./dist/client.js'), {
+        headers: {
+          'Content-Type': 'text/javascript',
+        },
+      });
+    }
+    return new Response('Not Found', {
+      status: 404,
+    });
   },
 });

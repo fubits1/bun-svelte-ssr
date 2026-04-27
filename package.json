@@ -2,6 +2,8 @@
   "type": "module",
   "main": "src/index.js",
   "scripts": {
+    "build": "export MODE=client && bun run ./src/build.js",
+    "start": "bun run build && bun run ./src/index.js",
     "dev": "bun run --watch ./src ./src/index.js",
     "format": "bunx @biomejs/biome format ./src --write",
     "lint": "bunx @biomejs/biome lint ./src --apply",
